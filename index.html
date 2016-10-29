@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mister Dojo</title>
+  <script type="text/javascript" src="js/MisterDojo.js"></script>
+</head>
+
+<body>
+</body>
+
+<script type="text/javascript">
+var storedState = localStorage.getItem('elm-dojo-state');
+var startingState = storedState ? JSON.parse(storedState) : null;
+var todomvc = Elm.MisterDojo.fullscreen(startingState);
+todomvc.ports.focus.subscribe(function(selector) {
+    setTimeout(function() {
+        var nodes = document.querySelectorAll(selector);
+        if (nodes.length === 1 && document.activeElement !== nodes[0]) {
+            nodes[0].focus();
+        }
+    }, 50);
+});
+todomvc.ports.setStorage.subscribe(function(state) {
+    localStorage.setItem('elm-dojo-state', JSON.stringify(state));
+});
+</script>
+
+</html>
